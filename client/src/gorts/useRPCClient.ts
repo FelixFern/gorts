@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Calculator } from "./calculator";
+import { RPCService } from "./type";
 
 type RPCClientOptions = {
   serverUrl: string;
@@ -64,7 +64,7 @@ export const useRPCClient = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const client = createRPCClient<{ Calculator: Calculator }>({
+  const client = createRPCClient<RPCService>({
     serverUrl: "http://localhost:8080/rpc",
     setLoading,
     setError,
