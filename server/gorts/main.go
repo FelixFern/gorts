@@ -57,6 +57,11 @@ func (g *gorts) Initiate() error {
 		rpc.ServeRequest(serverCodec)
 	})
 
+	err = GenerateTSTypes(g.registeredRPC)
+	if err != nil {
+		fmt.Printf("Error generating TypeScript types: %v\n", err)
+	}
+
 	return http.Serve(listener, nil)
 }
 
@@ -91,11 +96,6 @@ func (g *gorts) Register(service interface{}) error {
 	}
 
 	g.registeredRPC = append(g.registeredRPC, serviceData)
-
-	err = GenerateTSTypes(serviceData)
-	if err != nil {
-		fmt.Printf("Error generating TypeScript types: %v\n", err)
-	}
 
 	return nil
 }

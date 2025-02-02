@@ -2,44 +2,68 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"gorpcts/gorts"
 )
 
-type Calculator struct{}
+type Dog struct{}
+type Cat struct{}
+type Duck struct{}
 
-type Testing struct {
-	VarA int
-	VarB string
+type DogArgs struct {
+	Name string
+}
+type CatArgs struct {
+	Name string
+}
+type DuckArgs struct {
+	Name string
 }
 
-type Args struct {
-	A int
-	B int
-}
-
-func (c *Calculator) Addition(args *Args, reply *int) error {
+func (c *Dog) Bark(args *DogArgs, reply *string) error {
 	if args == nil {
 		return errors.New("args empty")
 	}
 
-	*reply = args.A + args.B
+	*reply = fmt.Sprintf("%s barked", args.Name)
 	return nil
 }
 
-func (c *Calculator) Multiply(args *Args, reply *int) error {
+func (c *Cat) Bark(args *CatArgs, reply *string) error {
 	if args == nil {
 		return errors.New("args empty")
 	}
 
-	*reply = args.A * args.B
+	*reply = fmt.Sprintf("%s barked", args.Name)
+	return nil
+}
+
+func (c *Duck) Quack(args *DuckArgs, reply *string) error {
+	if args == nil {
+		return errors.New("args empty")
+	}
+
+	*reply = fmt.Sprintf("%s barked", args.Name)
 	return nil
 }
 
 func main() {
-	calc := &Calculator{}
+	dog := &Dog{}
+	cat := &Cat{}
+	duck := &Duck{}
 	server := gorts.NewGorts(8080)
 
-	err := server.Register(calc)
+	err := server.Register(dog)
+	if err != nil {
+		panic(err)
+	}
+
+	err = server.Register(cat)
+	if err != nil {
+		panic(err)
+	}
+
+	err = server.Register(duck)
 	if err != nil {
 		panic(err)
 	}
